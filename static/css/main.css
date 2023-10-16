@@ -1,0 +1,58 @@
+.card {
+    margin: auto 0;
+}
+
+.carousel-item {
+    height: auto; /* Set the desired container height */
+    overflow: hidden; /* Hide any overflow if the image is larger than the container */
+  }
+  
+.carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* This ensures the image fits within the container while maintaining aspect ratio */
+}
+
+.bg-gray {
+    background-color: rgba(188, 186, 186, 0.211);
+}
+
+.accordion {
+    width: 16em;
+}
+
+.accordion-button:not(.collapsed)::after {
+    transform: none !important;
+}
+
+.select-cat {
+    text-decoration: none;
+}
+
+.section-left {
+    flex: 1; /* Equal width for left and right sections */
+    height: auto;
+}
+
+.section-right {
+    flex: 0.8;
+    height: auto;
+    overflow: hidden;
+}
+
+.image-container {
+    display: flex;
+    justify-content: center; /* Horizontally center the content */
+    align-items: center; /* Vertically center the content */
+    height: 100%; /* Match the height of the section */
+}
+
+
+.image-container img {
+    max-width: 100%; /* Ensure the image doesn't exceed the container's width */
+    height: auto; 
+}
+
+.btn-group .btn-size {
+    min-width: 4em;
+}

@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Store{% endblock title %}
+{% block content %}
+
+    <div class="d-flex px-5">
+        {% comment %} Accordion {% endcomment %}
+        <div class="side-bar d-none d-sm-none d-md-block">
+            <div class="accordion mx-10">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button">
+                        Categories
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse show">
+                        <div class="accordion-body">
+                            <p><a href="{% url "store" %}" class="select-cat">All Products</a></p>
+        
+                            {% for category in links %}
+                                <p><a href="{{ category.get_url }}" class="select-cat">{{ category.category_name }}</a></p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="accordion mx-10">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button">
+                        Sizes
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse show">
+                        <div class="accordion-body sizes">
+                            <button type="button" class="btn btn-light">XS</button>
+                            <button type="button" class="btn btn-light">SM</button>
+                            <button type="button" class="btn btn-light">MD</button>
+                            <button type="button" class="btn btn-light">XL</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion mx-10">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button">
+                        Price range
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse show">
+                        <div class="accordion-body">
+                            <div class="price-range-text d-flex justify-content-between">
+                                <span>Price</span>
+                                <label for="">
+                                    <span class="input-price">0</span>
+                                    <span class="input-currency">฿</span>
+                                </label>
+                            </div>
+                            <input type="range" min="100" max="5000" step="50" value="2000" oninput="updateValue(this.value)" style="width: 100%" class="price-range">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        {% comment %} Accordion {% endcomment %}
+          <section class="flex-grow-1 ms-4 d-flex flex-column">
+            <div class="container bg-body-light">
+
+                {{ products_count }} Items found
+            </div>
+            <hr class="mb-4">
+            {% comment %} Card {% endcomment %}
+
+
+            <div class="row flex-grow-1 mb-4">
+                {% comment %} Column {% endcomment %}
+                {% for product in products %}
+                    <div class="col-xl-3 col-lg-4 col-md-6">
+                        <div class="card mx-auto" style="margin-bottom: 1.4em">
+                            <div class="px-4 py-2">
+                                <img src="{{ product.images.url }}" class="card-img-top" width="100" alt="..." height="180">
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <h6 class="card-title">{{ product.product_name }}</h6>
+                                    <h5 class="card-title">{{ product.price }}฿</h5>
+                                </div>
+                            <hr>
+                            <div class="d-flex gap-2">
+                                {% if product.stock <= 0 %}
+                                    <button class="btn btn-secondary flex-grow-1" disabled>Out of stock</button>
+                                {% else %}
+                                    <a href="#" class="btn btn-primary flex-grow-1">Add to cart</a>
+                                {% endif %}
+                                <a href="{{ product.get_url }}" class="btn btn-outline-primary">View</a>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                {% comment %} Column {% endcomment %}
+            </div>
+
+            
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-end">
+                  <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                </ul>
+            </nav>
+            {% comment %} end card {% endcomment %}
+          </section>
+    </div>
+
+    <script type="text/javascript">
+        
+        const range = document.querySelector('.price-range');
+        const price = document.querySelector('.input-price');
+        price.textContent = 2000
+        function updateValue(value) {
+            price.textContent = value
+        }
+
+        const sizesContainer = document.querySelector('.accordion-body.sizes');
+        const buttons = sizesContainer.querySelectorAll('button');
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                buttons.forEach(btn => {
+                    btn.classList.remove('active');
+                });
+
+                btn.classList.add('active')
+            })
+        })
+        
+    </script>
+{% endblock content %}
